@@ -1,0 +1,3 @@
+3DMJE9dAQUts1ycd
+vishwakarmagagan24
+mongodb+srv://vishwakarmagagan24:3DMJE9dAQUts1ycd@cluster0.0z7qe.mongodb.net/movie?retryWrites=true&w=majority&appName=Cluster0

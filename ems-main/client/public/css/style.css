@@ -1,0 +1,12 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body>* {
+    width: 90%;
+    margin: auto;
+    height: 100vh;
+    border: solid;
+}
