@@ -9,7 +9,7 @@ export default function Dashboard() {
         nav("/login")
     }
     return (
-        <div className="flex bg-gray-300 h-screen fixed">
+        <div className="flex bg-gray-300 h-screen fixed w-screen">
             <aside className={`z-3 flex flex-col text-gray-300 bg-gray-800 transition-all duration-300 ease-in-out ${isSidebarExpanded ? "w-64" : "w-20"}`} >
                 <NavLink to="/dashboard" className="h-20 flex items-center px-4 bg-gray-900 hover:text-gray-100 hover:bg-opacity-50 focus:outline-none focus:text-gray-100 focus:bg-opacity-50 overflow-hidden">
                     <svg viewBox="0 0 20 20" fill="currentColor" className="h-12 w-12 flex-shrink-0">
@@ -46,7 +46,7 @@ export default function Dashboard() {
                     </button>
                 </div>
             </aside>
-            <div className={`flex-1 flex flex-col   ${isSidebarExpanded ? "min-w-278" : "min-w-322"}`}>
+            <div className={`flex-1 flex flex-col   w-96`}>
                 <header className="h-20 flex items-center px-6 bg-white ">
                     <button className="p-2 -ml-2 mr-2 z-50" onClick={() => {
                         console.log("cliecked")
@@ -61,7 +61,7 @@ export default function Dashboard() {
                     </button>
                     <span className="font-medium">Header</span>
                 </header>
-                <main className="text-neutral-950 flex-1 p-6   overflow-auto" style={{ scrollbarWidth: "0px" }} >
+                <main className="text-neutral-950 flex-1 p-6 overflow-auto">
                     <Outlet />
                 </main>
             </div>

@@ -41,6 +41,20 @@ app.use("/api/user/", userRoute)
 app.use('/api/admin/', adminRoute)
 app.use('/api/emp/', empRoute)
 
+app.use((err, req, res, next) => {
+    console.error("Error caught by middleware:", err);
+
+    // If response has already been sent, delegate to default Express error handler
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    res.status(err.status || 500).json({
+        result: false,
+        message: err.message || "Internal Server Error",
+    });
+})
+
 app.listen(port, (err) => {
     console.log(err || "app run on port " + port)
 })

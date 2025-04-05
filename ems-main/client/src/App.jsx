@@ -10,6 +10,7 @@ import EmpList from './Screen/EmpList.jsx';
 import ProtectedRoute from './Screen/ProtectedRoute.jsx';
 import Layout from './Screen/Layout.jsx';
 import EmpDashboard from './Screen/EmpDashboard.jsx';
+import UpdateEmp from './Screen/UpdateEmp.jsx';
 const App = () => {
   return (
     <Router>
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/dashboard/createemp" element={<CreateEmp />}> </Route>
             <Route path="/dashboard/emplist" element={<EmpList />}> </Route>
             <Route path="/dashboard/creattask" element={<EmpList />}> </Route>
+            <Route path="/dashboard/updateemp/:id" element={<UpdateEmp />}> </Route>
           </Route>
         </Routes>
       </Layout>

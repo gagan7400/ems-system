@@ -53,17 +53,48 @@ let allemp = async (req, res) => {
         let data = await empModel.find();
         res.send({ result: true, data })
     } catch (error) {
-        res.send({ result: false })
+        res.send({ result: false, message: error.message })
+    }
+}
+let getemp = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let emp = await empModel.findById(id);
+        if (!emp) {
+            res.send({ result: false, message: "Employee Not Found" })
+        }
+
+        res.send({ result: true, data: emp })
+    } catch (error) {
+        res.send({ result: false, message: error.message })
     }
 }
 let updateEmp = async () => {
     try {
         let { id } = req.params;
-        let user = await empModel.findByIdAndUpdate(id, { ...req.body });
-        res.send({ result: true, message: "update successfully" })
+        let user = await empModel.findById(id);
+        if (!user) {
+            res.status(400).send({ result: false, message: "Employee Not Found" })
+        }
+        let data = await empModel.findByIdAndUpdate(id, { ...req.body });
+        res.send({ result: true, message: "update successfully", data })
 
     } catch (error) {
-        res.send({ result: false })
+        res.send({ result: false, message: error.message })
     }
 }
-module.exports = { registeremp, loginemp, allemp, updateEmp }
+let deleteEmp = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let user = await empModel.findById(id);
+        if (!user) {
+            res.status(400).send({ result: false, message: "Employee Not Found" })
+        }
+        await empModel.findByIdAndDelete(id);
+        res.status(200).send({ result: true, message: "Employee Delete Successfully", })
+
+    } catch (error) {
+        res.status(400).send({ result: false, message: "Internal Server Error" })
+    }
+}
+module.exports = { registeremp, loginemp, allemp, updateEmp, deleteEmp, getemp }
