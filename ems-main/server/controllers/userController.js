@@ -11,10 +11,10 @@ let createUserController = async (req, res) => {
         }
         let data = await userModel({ name, email, password, number, image });
         await data.save();
-        res.send({ result: "success", message: "data submiited succesfuly", data })
+        return res.send({ result: "success", message: "data submiited succesfuly", data })
     } catch (error) {
         console.log(error)
-        res.status(400).json({ result: "faileds", message: error.message })
+        return res.status(400).json({ result: "faileds", message: error.message })
     }
 
 }
@@ -22,21 +22,21 @@ let registerUserController = async (req, res) => {
     try {
         let { name, email, password } = req.body;
         if (!email || !password || !name) {
-            res.status(400).json({ result: "failed", message: "please provide Valid information" })
+            return res.status(400).json({ result: "failed", message: "please provide Valid information" })
         }
 
         let user = await userModel.findOne({ email });
         if (user) {
-            res.status(400).json({ result: "failed", message: "user Already Exsist" })
+            return res.status(400).json({ result: "failed", message: "user Already Exsist" })
         }
 
         let salt = await bcrypt.genSalt(10);
         let hashpassword = await bcrypt.hash(password, salt);
         let data = await userModel.create({ name, email, password: hashpassword, empid: "GROWW-EM-" + allempoyee.length + 1 })
-        res.send({ result: "success", message: "data submiited succesfuly" })
+        return res.send({ result: "success", message: "data submiited succesfuly" })
     } catch (error) {
-        console.log(error)
-        res.status(400).json({ result: "failed", message: error.message })
+
+        return res.status(400).json({ result: "failed", message: error.message })
     }
 
 }
@@ -44,25 +44,25 @@ let registerUserController = async (req, res) => {
 let getAllUserController = async (req, res) => {
     try {
         let data = await userModel.find().select("-password")
-        res.json({ data })
+        return res.json({ data })
     } catch (error) {
-        res.status(400).json({ result: "failed", message: error.message })
+        return res.status(400).json({ result: "failed", message: error.message })
     }
 }
 let middlewaretoken = async (req, res, next) => {
     try {
         let token = req.headers.authorization.split(" ")[1];
         if (!token) {
-            res.json({ result: "failed", message: "kon he be tu , access denied" })
+            return res.json({ result: "failed", message: "kon he be tu , access denied" })
         }
         let verify = await jwt.verify(token, process.env.SECRETKEY)
         if (verify) {
             next();
         } else {
-            res.status(400).json({ result: "failed", message: "kon he be tu , access denied" })
+            return res.status(400).json({ result: "failed", message: "kon he be tu , access denied" })
         }
     } catch (error) {
-        res.json({ result: "failed", message: "internal server error" })
+        return res.json({ result: "failed", message: "internal server error" })
     }
 }
 
@@ -70,23 +70,23 @@ let loginuser = async (req, res) => {
     try {
         let { email, password } = req.body;
         if (!email || !password) {
-            res.status(400).json({ result: "failed", message: "please provide Valid information" })
+            return res.status(400).json({ result: "failed", message: "please provide Valid information" })
         }
         let user = await userModel.findOne({ email });
         if (!user) {
-            res.status(400).json({ result: "failed", message: "wrong credentails" })
+            return res.status(400).json({ result: "failed", message: "wrong credentails" })
         }
 
         let isMatch = await bcrypt.compare(password, user.password);
 
         if (isMatch) {
             let token = await jwt.sign({ id: user._id }, process.env.SECRETKEY, { expiresIn: "20000ms" })
-            res.send({ message: "login successfully", token })
+            return res.send({ message: "login successfully", token })
         } else {
-            res.status(400).json({ result: "failed", message: "wrong credentails" })
+            return res.status(400).json({ result: "failed", message: "wrong credentails" })
         }
     } catch (error) {
-        res.status(400).json({ result: "failed", message: error.message })
+        return res.status(400).json({ result: "failed", message: error.message })
     }
 }
 let getUserController = async (req, res) => {
@@ -94,9 +94,9 @@ let getUserController = async (req, res) => {
         let { id } = req.params;
         let data = await userModel.findById(id)
         // let data = await userModel.findOne({ name })
-        res.json({ data })
+        return res.json({ data })
     } catch (error) {
-        res.status(400).json({ result: "failed", message: error.message })
+        return res.status(400).json({ result: "failed", message: error.message })
     }
 }
 let updateUserController = async (req, res) => {
@@ -104,12 +104,12 @@ let updateUserController = async (req, res) => {
         let { id } = req.params;
         let user = await userModel.findById(id);
         if (!user) {
-            res.status(400).json({ result: "failed", message: "user not found" })
+            return res.status(400).json({ result: "failed", message: "user not found" })
         }
         let data = await userModel.findByIdAndUpdate(id, req.body)
-        res.json({ result: "success", message: "user update successfully" })
+        return res.json({ result: "success", message: "user update successfully" })
     } catch (error) {
-        res.status(400).json({ result: "failed", message: error.message })
+        return res.status(400).json({ result: "failed", message: error.message })
     }
 }
 let deleteUserController = async (req, res) => {
@@ -117,12 +117,12 @@ let deleteUserController = async (req, res) => {
         let { id } = req.params;
         let user = await userModel.findById(id);
         if (!user) {
-            res.status(400).json({ result: "failed", message: "user not found" })
+            return res.status(400).json({ result: "failed", message: "user not found" })
         }
         let data = await userModel.findByIdAndDelete(id)
-        res.json({ result: "success", message: "user delete successfully" })
+        return res.json({ result: "success", message: "user delete successfully" })
     } catch (error) {
-        res.status(400).json({ result: "failed", message: error.message })
+        return res.status(400).json({ result: "failed", message: error.message })
     }
 }
 

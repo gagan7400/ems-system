@@ -10,17 +10,17 @@ let uploadmedia = async (req, res) => {
         }
         let data = await mediaModel({ ...mediadetail });
         await data.save();
-        res.send({ success: true, message: "image upload successfully", data: data })
+        return     res.send({ success: true, message: "image upload successfully", data: data })
     } catch (error) {
-        res.json({ message: error.msg, success: "failed" })
+        return   res.json({ message: error.msg, success: "failed" })
     }
 }
 let getmedia = async (req, res) => {
     try {
         let data = await mediaModel.find({});
-        res.send({ success: true, message: "image upload successfully", data })
+        return  res.send({ success: true, message: "image upload successfully", data })
     } catch (error) {
-        res.json({ message: error.msg, success: "failed" })
+        return  res.json({ message: error.msg, success: "failed" })
     }
 }
 module.exports = { uploadmedia, getmedia }

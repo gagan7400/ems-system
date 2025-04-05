@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import { toast, Bounce } from 'react-toastify';
 export default function LoginAdmin() {
     const [password, setpassword] = useState('')
     const [email, setemail] = useState('');
@@ -19,7 +19,7 @@ export default function LoginAdmin() {
             if (res.result) {
                 console.log(res);
                 localStorage.setItem("token", JSON.stringify(res.token));
-                localStorage.setItem("admin", JSON.stringify(res.user));
+                localStorage.setItem("user", JSON.stringify(res.user));
                 if (res.user.role == "admin") {
                     nav("/dashboard")
                 } else if (res.user.role == "employee") {
@@ -34,29 +34,62 @@ export default function LoginAdmin() {
     }
     let submitHandleremp = async (e) => {
         e.preventDefault();
-
-        try {
-            let data = await fetch('http://localhost:4000/api/emp/loginemp', {
-                method: "POST",
-                body: JSON.stringify({ email, password }), headers: {
-                    "Content-Type": "application/json"
+        if (!email || !password) {
+            toast.error("Please Provide All Details", {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        } else {
+            try {
+                let data = await fetch('http://localhost:4000/api/emp/loginemp', {
+                    method: "POST",
+                    body: JSON.stringify({ email, password }), headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                let res = await data.json();
+                if (res.result) {
+                    console.log(res);
+                    localStorage.setItem("token", JSON.stringify(res.token));
+                    localStorage.setItem("user", JSON.stringify(res.user));
+                    if (res.user.role == "admin") {
+                        nav("/dashboard")
+                    } else if (res.user.role == "employee") {
+                        nav("/empdashboard")
+                    }
+                } else {
+                    toast.error(res.message, {
+                        position: "top-right",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                    });
                 }
-            })
-            let res = await data.json();
-            if (res.result) {
-                console.log(res);
-                localStorage.setItem("token", JSON.stringify(res.token));
-                localStorage.setItem("admin", JSON.stringify(res.user));
-                if (res.user.role == "admin") {
-                    nav("/dashboard")
-                } else if (res.user.role == "employee") {
-                    nav("/empdashboard")
-                }
-            } else {
-                console.log(res.message)
+            } catch (error) {
+                toast.error(error, {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
             }
-        } catch (error) {
-            console.log(error)
         }
     }
     return (

@@ -5,3 +5,11 @@
 ::-webkit-scrollbar {
     display: none;
 }
+
+.toast-message {
+    background: red;
+    color: #fff;
+    font-size: 20px;
+    width: 34vw;
+    padding: 30px 20px;
+}
