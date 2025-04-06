@@ -13,7 +13,14 @@ import EmpDashboard from './Screen/EmpDashboard.jsx';
 import UpdateEmp from './Screen/UpdateEmp.jsx';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ViewTask from './Screen/ViewTask.jsx';
+import CreateTask from './Screen/CreateTask.jsx';
+import { useSelector } from 'react-redux';
+import TaskUpdate from './Screen/TaskUpdate.jsx';
 const App = () => {
+  let empdata = useSelector(state => state.emp);
+  console.log(empdata)
+
   return (
     <Router>
       <Layout>
@@ -26,7 +33,7 @@ const App = () => {
           <Route path="/login" element={<LoginAdmin />} />
 
           <Route path="/empdashboard" element={<ProtectedRoute allowedRoles={["employee"]} Component={<EmpDashboard />} />} >
-            <Route path="/empdashboard/createemp" element={<CreateEmp />}> </Route>
+            <Route path="/empdashboard/viewtask" element={<ViewTask />}> </Route>
             <Route path="/empdashboard/emplist" element={<EmpList />}> </Route>
             <Route path="/empdashboard/creattask" element={<EmpList />}> </Route>
             <Route path="/empdashboard/updateemp/:id" element={<UpdateEmp />}> </Route>
@@ -34,7 +41,9 @@ const App = () => {
           <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["admin"]} Component={<Dashboard />} />} >
             <Route path="/dashboard/createemp" element={<CreateEmp />}> </Route>
             <Route path="/dashboard/emplist" element={<EmpList />}> </Route>
-            <Route path="/dashboard/creattask" element={<EmpList />}> </Route>
+            <Route path="/dashboard/creattask" element={<CreateTask />}> </Route>
+            <Route path="/dashboard/viewtask" element={<ViewTask />}> </Route>
+            <Route path="/dashboard/updattask/:id" element={<TaskUpdate />}> </Route>
             <Route path="/dashboard/updateemp/:id" element={<UpdateEmp />}> </Route>
           </Route>
         </Routes>

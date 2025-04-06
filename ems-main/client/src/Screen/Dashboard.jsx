@@ -8,6 +8,7 @@ export default function Dashboard() {
         localStorage.clear();
         nav("/login")
     }
+    let name = JSON.parse(localStorage.getItem("user"))
     return (
         <div className="flex bg-gray-300 h-screen fixed w-screen">
             <aside className={`z-3 flex flex-col text-gray-300 bg-gray-800 transition-all duration-300 ease-in-out ${isSidebarExpanded ? "w-64" : "w-20"}`} >
@@ -36,6 +37,12 @@ export default function Dashboard() {
                         </svg>
                         <span className={`ml-2 duration-300 ease-in-out ${isSidebarExpanded ? "opacity-100" : "opacity-0"}`}>CreateTask</span>
                     </NavLink>
+                    <NavLink to="/dashboard/viewtask" className="flex items-center h-10 px-3 hover:bg-blue-600 hover:bg-opacity-25 rounded-lg transition-colors duration-150 ease-in-out focus:outline-none focus:shadow-outline" >
+                        <svg viewBox="0 0 20 20" fill="currentColor" className="h-6 w-6 flex-shrink-0">
+                            <path d={"M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z"} />
+                        </svg>
+                        <span className={`ml-2 duration-300 ease-in-out ${isSidebarExpanded ? "opacity-100" : "opacity-0"}`}> ViewTask</span>
+                    </NavLink>
                 </nav>
                 <div className="border-t border-gray-700 p-4 font-medium mt-auto">
                     <button onClick={logout} className="flex items-center h-10 px-3 hover:bg-blue-600 hover:bg-opacity-25 rounded-lg transition-colors duration-150 ease-in-out focus:outline-none focus:shadow-outline" >
@@ -47,7 +54,7 @@ export default function Dashboard() {
                 </div>
             </aside>
             <div className={`flex-1 flex flex-col   w-96`}>
-                <header className="h-20 flex items-center px-6 bg-white ">
+                <header className="h-20 flex items-center justify-between px-6 bg-white ">
                     <button className="p-2 -ml-2 mr-2 z-50" onClick={() => {
                         console.log("cliecked")
                         setIsSidebarExpanded(!isSidebarExpanded)
@@ -59,7 +66,10 @@ export default function Dashboard() {
                             <path d="M4 12h17l-3 -3m0 6l3 -3" />
                         </svg>
                     </button>
-                    <span className="font-medium">Header</span>
+                    <div className='  flex items-center justify-between gap-5 px-6 bg-white '>
+                        <img className='w-10 h-10 p-1 rounded-full  object-center ring-2 ring-gray-300 dark:ring-gray-500' src={name ? name.image.path : "users.svg"} alt="" />
+                        <span className="font-medium">{name ? name.name : "Header"}</span>
+                    </div>
                 </header>
                 <main className="text-neutral-950 flex-1 p-6 overflow-auto">
                     <Outlet />

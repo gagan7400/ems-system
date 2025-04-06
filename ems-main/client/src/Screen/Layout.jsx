@@ -5,9 +5,13 @@ import { useLocation } from 'react-router-dom'
 
 export default function Layout({ children }) {
     let location = useLocation();
-    let [show, setshow] = useState(true)
+    let [show, setshow] = useState(true);
+    let paths = ["dashboard", "empdashboard"]
     useEffect(() => {
-        if (location.pathname.includes("dashboard")) {
+        let currentpath = location.pathname.split("/")[1];
+        console.log(paths, currentpath, paths.includes(currentpath))
+        if (paths.includes(currentpath)) {
+            console.log("object")
             setshow(false)
         }
     }, [location]);

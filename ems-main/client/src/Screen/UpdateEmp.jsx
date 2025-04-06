@@ -21,11 +21,10 @@ export default function UpdateEmp() {
             if (res.result) {
                 setnumber(res.data.number);
                 setName(res.data.name);
-                setpassword(res.data.password);
+
                 setemail(res.data.email);
-                setimage(res.data.image.path)
+                setimage("")
             } else {
-                console.log(res);
                 alert(res.message)
             }
         } catch (error) {
@@ -38,7 +37,6 @@ export default function UpdateEmp() {
     let filehandler = (e) => {
         e.preventDefault();
         setimage(e.target.files[0])
-        console.log(e.target.files)
     }
     let submitHandler = async (e) => {
         e.preventDefault();
@@ -48,7 +46,6 @@ export default function UpdateEmp() {
             formdata.append("email", email)
             formdata.append("password", password)
             formdata.append("number", number)
-            console.log(image)
             formdata.append("image", image);
 
             let data = await fetch('http://localhost:4000/api/emp/updateemp/' + id, {
@@ -61,7 +58,6 @@ export default function UpdateEmp() {
             })
             let res = await data.json();
             if (res.result) {
-                console.log(res)
                 alert("Employee Updated Successfully");
                 setnumber("");
                 setName("");
@@ -101,7 +97,7 @@ export default function UpdateEmp() {
                     <div >
                         <label htmlFor="password" className="block text-sm/6 font-semibold text-gray-900">Password</label>
                         <div className="mt-2.5">
-                            <input type="password" value={password} onChange={(e) => { setpassword(e.target.value) }} name="password" id="password" className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" />
+                            <input type="password" value={password} onChange={(e) => { setpassword(e.target.value) }} autoComplete={false} name="password" id="password" className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" />
                         </div>
                     </div>
 

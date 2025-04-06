@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import { toast, Bounce } from 'react-toastify';
 export default function CreateEmp() {
     const [name, setName] = useState('')
     const [password, setpassword] = useState('')
@@ -9,7 +9,6 @@ export default function CreateEmp() {
     let filehandler = (e) => {
         e.preventDefault();
         setimage(e.target.files[0])
-        console.log(e.target.files)
     }
     let submitHandler = async (e) => {
         e.preventDefault();
@@ -32,8 +31,17 @@ export default function CreateEmp() {
             })
             let res = await data.json();
             if (res.result) {
-                console.log(res)
-                alert("Employee Created Successfully");
+                toast.success("Employee created Successfully", {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
                 setnumber("");
                 setName("");
                 setpassword("");
@@ -41,10 +49,30 @@ export default function CreateEmp() {
                 setimage("")
 
             } else {
-                console.log(res)
+                toast.error(res.message, {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
             }
         } catch (error) {
-            console.log(error)
+            toast.error(error, {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
         }
     }
     return (
@@ -55,7 +83,7 @@ export default function CreateEmp() {
             <div className="mx-auto max-w-2xl text-center">
                 <h2 className="text-4xl font-semibold tracking-tight text-balance text-gray-900 sm:text-5xl">Register Employee</h2>
             </div>
-            <form className="mx-auto mt-16 max-w-xl sm:mt-20" onSubmit={submitHandler}>
+            <form className="mx-auto mt-16 max-w-xl sm:mt-20" onSubmit={submitHandler} autoComplete='off'>
                 <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                     <div>
                         <label htmlFor="name" className="block text-sm/6 font-semibold text-gray-900">Name</label>
@@ -66,13 +94,13 @@ export default function CreateEmp() {
                     <div>
                         <label htmlFor="Email" className="block text-sm/6 font-semibold text-gray-900">Email</label>
                         <div className="mt-2.5">
-                            <input type="email" value={email} onChange={(e) => { setemail(e.target.value) }} name="email" id="email" className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" />
+                            <input type="email" value={email} autoComplete='off' onChange={(e) => { setemail(e.target.value) }} name="email" id="email" className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" />
                         </div>
                     </div>
                     <div >
                         <label htmlFor="password" className="block text-sm/6 font-semibold text-gray-900">Password</label>
                         <div className="mt-2.5">
-                            <input type="password" value={password} onChange={(e) => { setpassword(e.target.value) }} name="password" id="password" className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" />
+                            <input type="password" value={password} autoComplete='new-password' onChange={(e) => { setpassword(e.target.value) }} name="password" id="password" className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" />
                         </div>
                     </div>
 
@@ -86,7 +114,7 @@ export default function CreateEmp() {
                     <div className="sm:col-span-2">
                         <label htmlFor="image" className="block text-sm/6 font-semibold text-gray-900">image</label>
                         <div className="mt-2.5">
-                            <input type="file" value={image} onChange={filehandler} name="image" id="image" className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" />
+                            <input type="file" onChange={filehandler} name="image" id="image" className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" />
                         </div>
                     </div>
 
@@ -100,23 +128,23 @@ export default function CreateEmp() {
         //     <form style={{ width: "500px" }} onSubmit={submitHandler}>
         //         <h4 className='text-center text-white w-75 m-auto py-3'> Create Emp  </h4>
         //         <div className="form-group mb-3">
-        //             <label htmlhtmlFor="name">name</label>
+        //             <label htmlFor="name">name</label>
         //             <input type="text" value={name} onChange={(e) => { setName(e.target.value) }} className="form-control" placeholder="enter Name" />
         //         </div>
         //         <div className="form-group mb-3">
-        //             <label htmlhtmlFor="email">email</label>
+        //             <label htmlFor="email">email</label>
         //             <input type="email" value={email} onChange={(e) => { setemail(e.target.value) }} className="form-control" placeholder="enter Email" />
         //         </div>
         //         <div className="form-group mb-3">
-        //             <label htmlhtmlFor="password">password</label>
+        //             <label htmlFor="password">password</label>
         //             <input type="password" value={password} onChange={(e) => { setpassword(e.target.value) }} className="form-control" placeholder="enter Password" />
         //         </div>
         //         <div className="form-group mb-3">
-        //             <label htmlhtmlFor="number">number</label>
+        //             <label htmlFor="number">number</label>
         //             <input type="number" value={number} onChange={(e) => { setnumber(e.target.value) }} className="form-control" placeholder="enter Number" />
         //         </div>
         //         <div className="form-group mb-3">
-        //             <label htmlhtmlFor="image">image</label>
+        //             <label htmlFor="image">image</label>
         //             <input type="file" onChange={filehandler} className="form-control" />
         //         </div>
 

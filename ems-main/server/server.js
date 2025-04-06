@@ -26,6 +26,7 @@ let cors = require("cors")
 let userRoute = require('./routes/getRoute');
 const adminRoute = require('./routes/adminRoute.js');
 const empRoute = require('./routes/empRoute.js');
+const taskRoute = require('./routes/taskRoute.js');
 dotenv.config();
 app.use(express.json())
 app.use(cors());
@@ -40,16 +41,16 @@ app.use("/uploads/", express.static(uploadpath))
 app.use("/api/user/", userRoute)
 app.use('/api/admin/', adminRoute)
 app.use('/api/emp/', empRoute)
+app.use('/api/task/', taskRoute)
+
 
 app.use((err, req, res, next) => {
     console.error("Error caught by middleware:", err);
-
     // If response has already been sent, delegate to default Express error handler
     if (res.headersSent) {
         return next(err);
     }
-
-    res.status(err.status || 500).json({
+    return res.status(err.status || 500).json({
         result: false,
         message: err.message || "Internal Server Error",
     });

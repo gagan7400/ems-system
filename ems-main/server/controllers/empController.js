@@ -10,7 +10,7 @@ let registeremp = async (req, res) => {
             path: `http://localhost:4000/uploads/${img.originalname}`
         }
         if (!email || !password || !name || !number) {
-            return  res.status(400).json({ result: false, message: "Please Provide valid details " });
+            return res.status(400).json({ result: false, message: "Please Provide valid details " });
         }
         let user = await empModel.findOne({ email });
         if (user) {
@@ -20,9 +20,9 @@ let registeremp = async (req, res) => {
         let hashPassword = await bcrypt.hash(password, salt);
         let createuser = await empModel({ email, password: hashPassword, name, number, image, role: "employee" });
         await createuser.save();
-        return   res.status(200).json({ result: true, message: "Employee Created Successfully" });
+        return res.status(200).json({ result: true, message: "Employee Created Successfully" });
     } catch (error) {
-        return  res.status(400).json({ result: false, message: "Internal Server Error" })
+        return res.status(400).json({ result: false, message: "Internal Server Error" })
     }
 }
 let loginemp = async (req, res) => {
@@ -43,16 +43,15 @@ let loginemp = async (req, res) => {
             return res.send({ result: false, message: "PLs Provde valid Credentials" })
         }
     } catch (error) {
-        console.log(error)
         return res.send({ result: false, message: error.message })
     }
 }
 let allemp = async (req, res) => {
     try {
         let data = await empModel.find();
-        return   res.send({ result: true, data })
+        return res.send({ result: true, data })
     } catch (error) {
-        return   res.send({ result: false, message: error.message })
+        return res.send({ result: false, message: error.message })
     }
 }
 let getemp = async (req, res) => {
@@ -60,26 +59,52 @@ let getemp = async (req, res) => {
         let { id } = req.params;
         let emp = await empModel.findById(id);
         if (!emp) {
-            return      res.send({ result: false, message: "Employee Not Found" })
+            return res.send({ result: false, message: "Employee Not Found" })
         }
-
-        return   res.send({ result: true, data: emp })
+        return res.send({ result: true, data: emp })
     } catch (error) {
-        return   res.send({ result: false, message: error.message })
+        return res.send({ result: false, message: error.message })
     }
 }
-let updateEmp = async () => {
+let updateEmp = async (req, res) => {
     try {
         let { id } = req.params;
         let user = await empModel.findById(id);
         if (!user) {
-            return   res.status(400).send({ result: false, message: "Employee Not Found" })
+            return res.status(400).send({ result: false, message: "Employee Not Found" })
         }
-        let data = await empModel.findByIdAndUpdate(id, { ...req.body });
-        return res.send({ result: true, message: "update successfully", data })
+
+        // Password check & hash if provided
+        let updatedPassword = user.password;
+        if (req.body.password) {
+            const salt = await bcrypt.genSalt(10);
+            updatedPassword = await bcrypt.hash(req.body.password, salt);
+        }
+        let img = req.file;
+        let image = "";
+        if (img) {
+            image = {
+                filename: img.originalname,
+                path: `http://localhost:4000/uploads/${img.originalname}`
+            }
+        }
+        // If image not present in req.body, retain the old one
+        const updatedData = {
+            name: req.body.name || user.name,
+            email: req.body.email || user.email,
+            password: updatedPassword || user.password,
+            number: req.body.number || user.number,
+            image: image || user.image
+        };
+
+        let data = await empModel.findByIdAndUpdate(id, updatedData, { new: true });
+
+        return res.send({ result: true, message: "Updated successfully", data });
+        // let data = await empModel.findByIdAndUpdate(id, { ...req.body });
+        // return res.send({ result: true, message: "update successfully", data })
 
     } catch (error) {
-        return  res.send({ result: false, message: error.message })
+        return res.send({ result: false, message: error.message })
     }
 }
 let deleteEmp = async (req, res) => {
@@ -87,13 +112,13 @@ let deleteEmp = async (req, res) => {
         let { id } = req.params;
         let user = await empModel.findById(id);
         if (!user) {
-            return     res.status(400).send({ result: false, message: "Employee Not Found" })
+            return res.status(400).send({ result: false, message: "Employee Not Found" })
         }
         await empModel.findByIdAndDelete(id);
-        return  res.status(200).send({ result: true, message: "Employee Delete Successfully", })
+        return res.status(200).send({ result: true, message: "Employee Delete Successfully", })
 
     } catch (error) {
-        return    res.status(400).send({ result: false, message: "Internal Server Error" })
+        return res.status(400).send({ result: false, message: "Internal Server Error" })
     }
 }
 module.exports = { registeremp, loginemp, allemp, updateEmp, deleteEmp, getemp }
