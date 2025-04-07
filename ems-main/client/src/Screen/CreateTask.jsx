@@ -121,7 +121,7 @@ export default function CreateTask() {
                             <select value={assignedTo} onChange={(e) => { setAssignedTo(e.target.value) }} className=" mt-2.5 px-3.5 py-2 text-base appearance-none w-full outline-1 -outline-offset-1 outline-gray-300   bg-white rounded-md focus:outline-2  focus:-outline-offset-2 focus:outline-indigo-600" name="whatever" id="frm-whatever">
                                 <option value="">Please choose&hellip;</option>
                                 {empdata?.map((emp, index) => (
-                                    <option value={emp._id} >{emp.name}</option>
+                                    <option key={index} value={emp._id} >{emp.name}</option>
                                 ))}
                             </select>
                         </div>

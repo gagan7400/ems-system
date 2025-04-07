@@ -12,10 +12,8 @@ export const getallemp = (api) => async (dispatch) => {
         const res = await response.json();
 
         if (res.result) {
-            console.log(res)
             dispatch(SUCCESS(res.data));
         } else {
-            console.log(res.message)
             dispatch(FAILED(res.message));
         }
     } catch (error) {

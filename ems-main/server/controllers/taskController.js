@@ -33,7 +33,7 @@ let getTaskByEmployeeController = async (req, res) => {
         if (!task) {
             return res.status(400).json({ result: false, message: "Task Not Found" })
         }
-        return res.status(200).json({ result: true, message: "Task Found", task })
+        return res.status(200).json({ result: true, message: "Task Found", data: task })
     } catch (error) {
         return res.status(400).json({ result: false, message: error.message, });
     }
