@@ -5,6 +5,8 @@ import { toast, Bounce } from 'react-toastify';
 
 export default function ViewTaskByEmp() {
     let [data, setdata] = useState([]);
+    let [status, setstatus] = useState("");
+    let [edit, setedit] = useState(false);
     let nav = useNavigate();
     let { id } = useParams();
     useEffect(() => {
@@ -20,11 +22,12 @@ export default function ViewTaskByEmp() {
             });
             let res = await emp.json();
             if (res.result) {
-                setdata(res.data)
+                setdata(res.data);
+                setstatus(res.data[0].status)
             } else {
                 toast.error(res.message, {
                     position: "top-right",
-                    autoClose: 2000,
+                    autoClose: 1000,
                     hideProgressBar: false,
                     closeOnClick: false,
                     pauseOnHover: true,
@@ -37,7 +40,7 @@ export default function ViewTaskByEmp() {
         } catch (error) {
             toast.error(error.message, {
                 position: "top-right",
-                autoClose: 2000,
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: false,
                 pauseOnHover: true,
@@ -51,7 +54,62 @@ export default function ViewTaskByEmp() {
     }
 
     let updatetask = async (id) => {
-        nav(`/dashboard/updattask/${id}`)
+        try {
+            let taskupdate = await fetch("http://localhost:4000/api/task/emp/updatetask/" + id, {
+                method: "PUT",
+                body: JSON.stringify({ status }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "token": JSON.parse(localStorage.getItem("token")),
+                    "authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+                }
+            });
+            let res = await taskupdate.json();
+            if (res.result) {
+                setedit(false)
+                getdata();
+                toast.success(res.message, {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+            } else {
+                toast.error(res.message, {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+            }
+        } catch (error) {
+            toast.error(error.message, {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        }
+    }
+    let statusupdate = (e) => {
+        e.preventDefault();
+        setedit(true);
+        setstatus(e.target.value)
     }
     return (
         <>
@@ -99,16 +157,22 @@ export default function ViewTaskByEmp() {
                                         </td>
                                         <td className="py-4 px-3 border-b border-gray-200 text-gray-900 text-sm ">
                                             <ul classes="[object Object]">
-                                                <li><a href="#">{task.dueDate}</a></li>
+                                                <li> {task.dueDate} </li>
                                             </ul>
                                         </td>
                                         <td className="py-4 px-3 border-b border-gray-200 text-gray-900 text-sm ">
                                             <ul classes="[object Object]">
-                                                <li><a href="#">{task.status}</a></li>
+                                                <li>
+                                                    <select value={status} onChange={statusupdate}>
+                                                        <option>To Do</option>
+                                                        <option>In Progress</option>
+                                                        <option>Done</option>
+                                                    </select>
+                                                </li>
                                             </ul>
                                         </td>
                                         <td className="py-4 px-3 border-b border-gray-200 text-gray-900 text-sm ">
-                                            <button onClick={() => { updatetask(task._id) }} className="rounded px-4 py-2 text-xs bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300">Edit</button>
+                                            <button onClick={edit ? () => { updatetask(task._id) } : ""} className={`rounded px-4 py-2 text-xs ${!edit ? "bg-blue-200" : "bg-blue-500"} text-blue-100 ${!edit ? "hover:bg-blue-300" : "hover:bg-blue-600"} duration-300`}>Edit</button>
                                         </td>
                                     </tr>
                                 ))}

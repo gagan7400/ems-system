@@ -9,10 +9,14 @@ export default function Layout({ children }) {
     let paths = ["dashboard", "empdashboard"]
     useEffect(() => {
         let currentpath = location.pathname.split("/")[1];
+        console.log(paths.includes(currentpath), "ddddd")
         if (paths.includes(currentpath)) {
             setshow(false)
+        }else{
+            setshow(true)
         }
     }, [location]);
+    console.log("call")
     return (
         <>
             {show && <Navbar />}

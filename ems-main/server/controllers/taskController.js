@@ -73,5 +73,19 @@ let deleteTaskController = async (req, res) => {
         return res.status(400).json({ result: false, message: error.message });
     }
 }
+let updateEmpTaskController = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let task = await Task.findById(id);
+        let { status } = req.body;
+        if (!task) {
+            return res.status(400).json({ result: false, message: "Task Not Found" })
+        }
+        await Task.findByIdAndUpdate(id, { $set: { status } }, { new: true })
+        return res.status(200).json({ result: true, message: "Task Update Successfully" });
+    } catch (error) {
+        return res.status(400).json({ result: false, message: error.message });
+    }
+}
 
-module.exports = { getTaskByEmployeeController, createTaskController, getTasksController, allTasksController, updateTaskController, deleteTaskController }
+module.exports = { getTaskByEmployeeController, createTaskController, updateEmpTaskController, getTasksController, allTasksController, updateTaskController, deleteTaskController }

@@ -17,6 +17,10 @@ import ViewTask from './Screen/ViewTask.jsx';
 import CreateTask from './Screen/CreateTask.jsx';
 import TaskUpdate from './Screen/TaskUpdate.jsx';
 import ViewTaskByEmp from './Screen/ViewTaskByEmp.jsx';
+import Error from './Screen/Error.jsx';
+import DashWelcome from './Screen/DashWelcome.jsx';
+import EmpWelcome from './Screen/EmpWelcome.jsx';
+import Profile from './Screen/Profile.jsx';
 const App = () => {
   return (
     <Router>
@@ -26,12 +30,17 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/register" element={<Admin />} />
+          <Route path="*" element={<Error />} />
+          {/* <Route path="/register" element={<Admin />} /> */}
           <Route path="/login" element={<LoginAdmin />} />
           <Route path="/empdashboard" element={<ProtectedRoute allowedRoles={["employee"]} Component={<EmpDashboard />} />} >
+            <Route path="/empdashboard" element={<EmpWelcome />}> </Route>
+            <Route path="/empdashboard/profile" element={<Profile />}> </Route>
             <Route path="/empdashboard/viewtask/:id" element={<ViewTaskByEmp />}> </Route>
           </Route>
           <Route path="/dashboard" element={<ProtectedRoute allowedRoles={["admin"]} Component={<Dashboard />} />} >
+            <Route path="/dashboard/" element={<DashWelcome />}> </Route>
+            <Route path="/dashboard/profile" element={<Profile />}> </Route>
             <Route path="/dashboard/createemp" element={<CreateEmp />}> </Route>
             <Route path="/dashboard/emplist" element={<EmpList />}> </Route>
             <Route path="/dashboard/creattask" element={<CreateTask />}> </Route>

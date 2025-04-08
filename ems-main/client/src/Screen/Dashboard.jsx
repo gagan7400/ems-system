@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { Navigate, NavLink, Outlet, useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
     let nav = useNavigate()
     let logout = () => {
         localStorage.clear();
-        nav("/login")
+        nav("/")
     }
     let name = JSON.parse(localStorage.getItem("user"))
     return (
         <div className="flex bg-gray-300 h-screen fixed w-screen">
-            <aside className={`z-3 flex flex-col text-gray-300 bg-gray-800 transition-all duration-300 ease-in-out ${isSidebarExpanded ? "w-64" : "w-20"}`} >
+            <aside className={`z-3 flex flex-col text-gray-300 bg-gray-800 transition-all duration-300 ease-in-out ${isSidebarExpanded ? "w-64" : "w-20"} min-h-[550px]`} >
                 <NavLink to="/dashboard" className="h-20 flex items-center px-4 bg-gray-900 hover:text-gray-100 hover:bg-opacity-50 focus:outline-none focus:text-gray-100 focus:bg-opacity-50 overflow-hidden">
                     <svg viewBox="0 0 20 20" fill="currentColor" className="h-12 w-12 flex-shrink-0">
                         <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
@@ -64,10 +64,10 @@ export default function Dashboard() {
                             <path d="M4 12h17l-3 -3m0 6l3 -3" />
                         </svg>
                     </button>
-                    <div className='  flex items-center justify-between gap-5 px-6 bg-white '>
+                    <NavLink to={`/dashboard/profile`}><div className='  flex items-center justify-between gap-5 px-6 bg-white '>
                         <img className='w-10 h-10 p-1 rounded-full  object-center ring-2 ring-gray-300 dark:ring-gray-500' src={name ? name.image.path : "users.svg"} alt="" />
                         <span className="font-medium">{name ? name.name : "Header"}</span>
-                    </div>
+                    </div></NavLink>
                 </header>
                 <main className="text-neutral-950 flex-1 p-6 overflow-auto">
                     <Outlet />
