@@ -9,7 +9,6 @@ export default function ViewTask() {
     let { empdata } = useSelector(state => state.emp);
     let dispatch = useDispatch()
     useEffect(() => {
-
         if (!empdata) {
             dispatch(getallemp("http://localhost:4000/api/emp/allemp"))
         }
@@ -143,7 +142,6 @@ export default function ViewTask() {
                                         </td>
                                         <td className="py-4 px-3 border-b border-gray-200 text-gray-900 text-sm ">
                                             <ul classes="[object Object]">
-                                                {console.log(empdata?.find((a) => { return a._id == task.assignedTo }))}
                                                 <li><a href="#">{empdata?.find((a) => { return a._id == task.assignedTo })?.name}</a></li>
                                             </ul>
                                         </td>

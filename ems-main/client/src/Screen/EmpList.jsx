@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, Bounce } from 'react-toastify';
 import { getallemp } from '../redux/action/empaction';
 import { useDispatch, useSelector } from 'react-redux';
+import Useloader from './Useloader';
 export default function EmpList() {
     let [data, setdata] = useState([]);
     let nav = useNavigate();
@@ -75,7 +76,7 @@ export default function EmpList() {
     }
     return (
         <>
-            {loading ? "loading....." : <div className="antialiased font-sans bg-gray-200">
+            {loading ? <Loader /> : <div className="antialiased font-sans bg-gray-200">
                 <div className="w-full shadow bg-white rounded">
                     <div className="border-gray-200 w-full rounded bg-white overflow-x-auto">
                         <table className="w-full leading-normal ">
@@ -133,5 +134,11 @@ export default function EmpList() {
                 </div>
             </div>}
         </>
+    )
+}
+
+function Loader() {
+    return (
+        <div class="loader"></div>
     )
 }

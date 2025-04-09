@@ -6,7 +6,6 @@ export default function EmpDashboard() {
     let nav = useNavigate()
     let logout = () => {
         localStorage.clear();
-        console.log("d")
         nav("/")
     }
     let name = JSON.parse(localStorage.getItem("user"))
