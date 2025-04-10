@@ -87,7 +87,7 @@ export default function LoginAdmin() {
                         </button>
                         <button type='button' className={` px-4 py-2 ${!emp ? "bg-blue-700" : "bg-green-200"}  ${!emp ? "text-green-100" : "text-blue-700"} hover:${!emp ? "bg-blue-800" : "bg-green-400"} duration-300`} onClick={() => { setemp(false) }}> Admin Login</button>
                     </div>
-                    <h4 className='p-5 text-center text-blue-800 font-bold py-3  text-2xl  '> {emp ? "Employee" : "Admin"} Login </h4>
+                    {/* <h4 className='p-5 text-center text-blue-800 font-bold py-3  text-2xl  '> {emp ? "Employee" : "Admin"} Login </h4> */}
                     <div className=" p-5 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                         <div className='sm:col-span-2'>
                             <label htmlFor="email" className="block text-sm/6 font-semibold text-gray-900">Email</label>
@@ -102,7 +102,7 @@ export default function LoginAdmin() {
                             </div>
                         </div>
                     </div>
-                    <div className="p-5 mt-10">
+                    <div className="p-5 mt-5">
                         <button type="submit" className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
                     </div>
                 </form>

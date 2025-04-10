@@ -1,4 +1,3 @@
-import Admin from './components/Admin'
 import About from './components/About.jsx'
 import Contact from './components/Contact.jsx'
 import LoginAdmin from './components/LoginAdmin.jsx'
