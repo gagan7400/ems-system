@@ -8,7 +8,7 @@ let registeradmin = async (req, res) => {
         console.log(img)
         let image = {
             filename: img.originalname,
-            path: `http://localhost:4000/uploads/${img.originalname}`
+            path: `/uploads/${img.originalname}`
         }
         if (!email || !password || !name || !number) {
             return res.status(400).json({ result: false, message: "Please Provide valid details " });

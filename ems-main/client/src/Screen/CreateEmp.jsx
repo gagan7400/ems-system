@@ -21,7 +21,7 @@ export default function CreateEmp() {
             console.log(image)
             formdata.append("image", image);
 
-            let data = await fetch('http://localhost:4000/api/emp/registeremp', {
+            let data = await fetch('/api/emp/registeremp', {
                 method: "POST",
                 body: formdata,
                 headers: {

@@ -16,7 +16,7 @@ export default function Home() {
         data.append("image", image);
         console.log(name, password, email, number, image)
 
-        await fetch("http://localhost:4000/api/user/createuser", {
+        await fetch("/api/user/createuser", {
             method: "POST",
             body: data,
         }).then((res) => res.json()).then((result) => { console.log(result) }).catch((err) => {

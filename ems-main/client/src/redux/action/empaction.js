@@ -14,9 +14,11 @@ export const getallemp = (api) => async (dispatch) => {
         if (res.result) {
             dispatch(SUCCESS(res.data));
         } else {
+            console.log(res.message)
             dispatch(FAILED(res.message));
         }
     } catch (error) {
+        console.log(error)
         dispatch(FAILED(error.message));
     }
 };

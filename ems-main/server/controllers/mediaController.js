@@ -6,7 +6,7 @@ let uploadmedia = async (req, res) => {
         let mediadetail = {
             filename: req.file.filename,
             filesize: Number(req.file.size) / 1024 / 1024,
-            filepath: `http://localhost:4000/uploads/${req.file.filename}`
+            filepath: `/uploads/${req.file.filename}`
         }
         let data = await mediaModel({ ...mediadetail });
         await data.save();

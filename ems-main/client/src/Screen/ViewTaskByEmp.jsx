@@ -11,7 +11,7 @@ export default function ViewTaskByEmp() {
     }, []);
     let getdata = async () => {
         try {
-            let emp = await fetch("http://localhost:4000/api/task/gettask/emp/" + id, {
+            let emp = await fetch("/api/task/gettask/emp/" + id, {
                 headers: {
                     "token": JSON.parse(localStorage.getItem("token")),
                     "authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -21,6 +21,7 @@ export default function ViewTaskByEmp() {
             if (res.result) {
                 setdata(res.data);
             } else {
+                console.log(res.message)
                 toast.error(res.message, {
                     position: "top-right",
                     autoClose: 1000,
@@ -34,6 +35,7 @@ export default function ViewTaskByEmp() {
                 });
             }
         } catch (error) {
+            console.log(error)
             toast.error(error.message, {
                 position: "top-right",
                 autoClose: 1000,
@@ -102,7 +104,7 @@ function StatusField({ task, index, getdata }) {
     }
     let updatetask = async (id) => {
         try {
-            let taskupdate = await fetch("http://localhost:4000/api/task/emp/updatetask/" + id, {
+            let taskupdate = await fetch("/api/task/emp/updatetask/" + id, {
                 method: "PUT",
                 body: JSON.stringify({ status }),
                 headers: {
@@ -183,7 +185,7 @@ function StatusField({ task, index, getdata }) {
                 </ul>
             </td>
             <td className="py-4 px-3 border-b border-gray-200 text-gray-900 text-sm ">
-                <button onClick={edit ? () => { updatetask(task._id) } : ()=>{}} className={`rounded px-4 py-2 text-xs ${!edit ? "bg-blue-200" : "bg-blue-500"} text-blue-100 ${!edit ? "hover:bg-blue-300" : "hover:bg-blue-600"} duration-300`}>Edit</button>
+                <button onClick={edit ? () => { updatetask(task._id) } : () => { }} className={`rounded px-4 py-2 text-xs ${!edit ? "bg-blue-200" : "bg-blue-500"} text-blue-100 ${!edit ? "hover:bg-blue-300" : "hover:bg-blue-600"} duration-300`}>Edit</button>
             </td>
         </tr>
     )

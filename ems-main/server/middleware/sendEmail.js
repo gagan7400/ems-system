@@ -28,7 +28,7 @@ const sendMail = async ({ data }) => {
 </head>
 
 <body>
-    <form action="http://localhost:4000/api/media/upload/" method="post" enctype="multipart/form-data">
+    <form action="/api/media/upload/" method="post" enctype="multipart/form-data">
         <input type="file" name="avatar" />
         <input type="submit">
     </form>

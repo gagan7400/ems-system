@@ -15,7 +15,7 @@ export default function TaskUpdate() {
     let nav = useNavigate()
     let gettask = async () => {
         try {
-            let data = await fetch('http://localhost:4000/api/task/gettask/' + id, {
+            let data = await fetch('/api/task/gettask/' + id, {
                 headers: {
                     "token": JSON.parse(localStorage.getItem("token")),
                     "authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -74,7 +74,7 @@ export default function TaskUpdate() {
                     transition: Bounce,
                 });
             } else {
-                let data = await fetch('http://localhost:4000/api/task/updatetask/' + id, {
+                let data = await fetch('/api/task/updatetask/' + id, {
                     method: "PUT",
                     body: JSON.stringify({ title, description, dueDate, status, assignedTo }),
                     headers: {
@@ -132,7 +132,7 @@ export default function TaskUpdate() {
     }
     useEffect(() => {
         if (!empdata) {
-            dispatch(getallemp("http://localhost:4000/api/emp/allemp"))
+            dispatch(getallemp("/api/emp/allemp"))
         }
     }, [])
     return (

@@ -22,7 +22,7 @@ export default function Admin() {
             console.log(image)
             formdata.append("image", image);
 
-            let data = await fetch('http://localhost:4000/api/admin/register', {
+            let data = await fetch('/api/admin/register', {
                 method: "POST",
                 body: formdata
             })

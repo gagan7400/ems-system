@@ -6,7 +6,8 @@ let adminSchema = new mongoose.Schema({
     number: Number,
     password: String,
     image: { filename: String, path: String },
-    role: { type: String, default: "admin" }
-})
+    role: { type: String, default: "admin" },
+    
+}, Timestamp = true)
 
 module.exports = mongoose.model("admins", adminSchema)

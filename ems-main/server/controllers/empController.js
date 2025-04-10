@@ -7,7 +7,7 @@ let registeremp = async (req, res) => {
         let img = req.file;
         let image = {
             filename: img.originalname,
-            path: `http://localhost:4000/uploads/${img.originalname}`
+            path: `/uploads/${img.originalname}`
         }
         if (!email || !password || !name || !number) {
             return res.status(400).json({ result: false, message: "Please Provide valid details " });
@@ -85,7 +85,7 @@ let updateEmp = async (req, res) => {
         if (img) {
             image = {
                 filename: img.originalname,
-                path: `http://localhost:4000/uploads/${img.originalname}`
+                path: `/uploads/${img.originalname}`
             }
         }
         // If image not present in req.body, retain the old one

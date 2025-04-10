@@ -8,7 +8,7 @@ export default function LoginAdmin() {
     let nav = useNavigate()
     let submitHandler = async (e) => {
         e.preventDefault();
-        let api = !emp ? 'http://localhost:4000/api/admin/login' : 'http://localhost:4000/api/emp/loginemp'
+        let api = !emp ? '/api/admin/login' : '/api/emp/loginemp'
         if (!email || !password) {
             toast.error("Please Provide All Details", {
                 position: "top-right",

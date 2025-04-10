@@ -11,7 +11,7 @@ export default function UpdateEmp() {
     let nav = useNavigate()
     let getemp = async () => {
         try {
-            let data = await fetch('http://localhost:4000/api/emp/getemp/' + id, {
+            let data = await fetch('/api/emp/getemp/' + id, {
                 headers: {
                     "token": JSON.parse(localStorage.getItem("token")),
                     "authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -48,7 +48,7 @@ export default function UpdateEmp() {
             formdata.append("number", number)
             formdata.append("image", image);
 
-            let data = await fetch('http://localhost:4000/api/emp/updateemp/' + id, {
+            let data = await fetch('/api/emp/updateemp/' + id, {
                 method: "PUT",
                 body: formdata,
                 headers: {

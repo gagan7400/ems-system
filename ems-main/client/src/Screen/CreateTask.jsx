@@ -26,7 +26,7 @@ export default function CreateTask() {
                     transition: Bounce,
                 });
             } else {
-                let data = await fetch('http://localhost:4000/api/task/createtask', {
+                let data = await fetch('/api/task/createtask', {
                     method: "POST",
                     body: JSON.stringify({ title, description, dueDate, status, assignedTo }),
                     headers: {
@@ -83,7 +83,7 @@ export default function CreateTask() {
     }
     useEffect(() => {
         if (!empdata) {
-            dispatch(getallemp("http://localhost:4000/api/emp/allemp"))
+            dispatch(getallemp("/api/emp/allemp"))
         }
     }, [])
     return (

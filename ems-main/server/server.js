@@ -9,10 +9,11 @@ let userRoute = require('./routes/getRoute');
 const adminRoute = require('./routes/adminRoute.js');
 const empRoute = require('./routes/empRoute.js');
 const taskRoute = require('./routes/taskRoute.js');
+const bodyParser = require("body-parser")
 dotenv.config();
 app.use(express.json())
 app.use(cors());
-
+app.use(bodyParser.json())
 let port = process.env.PORT || 4000
 db(process.env.MONGOURL);
 
@@ -26,6 +27,13 @@ app.use('/api/emp/', empRoute)
 app.use('/api/task/', taskRoute)
 
 
+let frontendpath = path.join(__dirname, "../client/dist");
+console.log(frontendpath)
+app.use(express.static(frontendpath))
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+});
+
 app.use((err, req, res, next) => {
     console.error("Error caught by middleware:", err);
     // If response has already been sent, delegate to default Express error handler
@@ -37,6 +45,8 @@ app.use((err, req, res, next) => {
         message: err.message || "Internal Server Error",
     });
 })
+
+
 
 app.listen(port, (err) => {
     console.log(err || "app run on port " + port)

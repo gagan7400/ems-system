@@ -10,7 +10,7 @@ export default function ViewTask() {
     let dispatch = useDispatch()
     useEffect(() => {
         if (!empdata) {
-            dispatch(getallemp("http://localhost:4000/api/emp/allemp"))
+            dispatch(getallemp("/api/emp/allemp"))
         }
     }, [])
     useEffect(() => {
@@ -18,7 +18,7 @@ export default function ViewTask() {
     }, []);
     let getdata = async () => {
         try {
-            let emp = await fetch("http://localhost:4000/api/task/alltasks", {
+            let emp = await fetch("/api/task/alltasks", {
                 headers: {
                     "token": JSON.parse(localStorage.getItem("token")),
                     "authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -29,6 +29,7 @@ export default function ViewTask() {
                 setdata(res.data)
             }
         } catch (error) {
+            console.log(error)
             toast.error(error.message, {
                 position: "top-right",
                 autoClose: 2000,
@@ -47,7 +48,7 @@ export default function ViewTask() {
         let confirmation = confirm("Are you Sure you want to delete this");
         try {
             if (confirmation) {
-                let emp = await fetch(`http://localhost:4000/api/task/deletetask/${id}`, {
+                let emp = await fetch(`/api/task/deletetask/${id}`, {
                     method: "DELETE",
                     headers: {
                         "token": JSON.parse(localStorage.getItem("token")),

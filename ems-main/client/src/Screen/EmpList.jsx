@@ -13,10 +13,11 @@ export default function EmpList() {
         getdata();
     }, []);
     let getdata = async () => {
-        dispatch(getallemp("http://localhost:4000/api/emp/allemp"))
+        dispatch(getallemp("/api/emp/allemp"))
     }
     useEffect(() => {
         if (error) {
+            console.log(error)
             toast.error(error, {
                 position: "top-right",
                 autoClose: 2000,
@@ -34,7 +35,7 @@ export default function EmpList() {
         let confirmation = confirm("Are you Sure you want to delete this");
         try {
             if (confirmation) {
-                let emp = await fetch(`http://localhost:4000/api/emp/deleteemp/${id}`, {
+                let emp = await fetch(`/api/emp/deleteemp/${id}`, {
                     method: "DELETE",
                     headers: {
                         "token": JSON.parse(localStorage.getItem("token")),

@@ -7,7 +7,7 @@ let createUserController = async (req, res) => {
         console.log(name, email, password, number, req.file)
         let image = {
             filename: req.file.filename,
-            path: `http://localhost:4000/uploads/${req.file.filename}`
+            path: `/uploads/${req.file.filename}`
         }
         let data = await userModel({ name, email, password, number, image });
         await data.save();
