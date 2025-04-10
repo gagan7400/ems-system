@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node ems-main/server/server.js",
+    "build": "npm install --prefix ems-main/client && npm run build --prefix ems-main/client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
