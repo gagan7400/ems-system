@@ -16,7 +16,7 @@ export default function LoginAdmin() {
                 hideProgressBar: false,
                 closeOnClick: false,
                 pauseOnHover: true,
-                draggable: true,
+                draggable: true, 
                 progress: undefined,
                 theme: "light",
                 transition: Bounce,
