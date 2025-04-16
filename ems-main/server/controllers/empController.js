@@ -1,5 +1,5 @@
 let empModel = require("../models/empModel");
-let bcrypt = require("bcrypt");
+let bcrypt = require("bcryptjs");
 const JwtToken = require("../utils/JwtToken");
 let registeremp = async (req, res) => {
     try {
@@ -16,8 +16,8 @@ let registeremp = async (req, res) => {
         if (user) {
             return res.status(400).json({ result: false, message: "Email Already Registered" })
         }
-        let salt = await bcrypt.genSalt(10);
-        let hashPassword = await bcrypt.hash(password, salt);
+        
+        let hashPassword = await bcrypt.hash(password, 10);
         let createuser = await empModel({ email, password: hashPassword, name, number, image, role: "employee" });
         await createuser.save();
         return res.status(200).json({ result: true, message: "Employee Created Successfully" });
@@ -37,7 +37,7 @@ let loginemp = async (req, res) => {
         }
         let isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
-            let token = await JwtToken(user, process.env.SECRETKEY, '1h')
+            let token = await JwtToken(user, "xyz321uvw", '1h')
             return res.send({ result: true, message: "Login Successfully", user, token })
         } else {
             return res.send({ result: false, message: "PLs Provde valid Credentials" })
@@ -77,8 +77,8 @@ let updateEmp = async (req, res) => {
         // Password check & hash if provided
         let updatedPassword = user.password;
         if (req.body.password) {
-            const salt = await bcrypt.genSalt(10);
-            updatedPassword = await bcrypt.hash(req.body.password, salt);
+            
+            updatedPassword = await bcrypt.hash(req.body.password,10);
         }
         let img = req.file;
         let image = "";

@@ -5,7 +5,7 @@ let path = require('path');
 let dotenv = require("dotenv");
 let nodemailer = require("nodemailer")
 let cors = require("cors")
-let userRoute = require('./routes/getRoute');
+
 const adminRoute = require('./routes/adminRoute.js');
 const empRoute = require('./routes/empRoute.js');
 const taskRoute = require('./routes/taskRoute.js');
@@ -14,14 +14,14 @@ dotenv.config();
 app.use(express.json())
 app.use(cors());
 app.use(bodyParser.json())
-let port = process.env.PORT || 4000
-db(process.env.MONGOURL);
+let port = 4000
+db("mongodb+srv://vishwakarmagagan24:3DMJE9dAQUts1ycd@cluster0.0z7qe.mongodb.net/movie?retryWrites=true&w=majority&appName=Cluster0");
 
 let uploadpath = path.join(__dirname, 'uploads')
 app.use("/uploads/", express.static(uploadpath))
 
 // Routes
-app.use("/api/user/", userRoute)
+
 app.use('/api/admin/', adminRoute)
 app.use('/api/emp/', empRoute)
 app.use('/api/task/', taskRoute)

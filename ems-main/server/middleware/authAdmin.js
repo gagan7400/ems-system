@@ -7,7 +7,7 @@ let authAdmin = async (req, res, next) => {
         if (!token) {
             return res.json({ result: false, message: "kon he be tu , access denied" })
         }
-        let verify = await Jwt.verify(token, process.env.SECRETKEY);
+        let verify = await Jwt.verify(token, "xyz321uvw");
         if (verify) {
             next();
         } else {
